@@ -12,10 +12,147 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "ux2kq68gg4");
   </script>
+   <style>
+    /* ---------- RESET ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", system-ui, sans-serif;
+    }
+
+    /* ---------- BACKGROUND ---------- */
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    /* ---------- ANIMATED BLOBS ---------- */
+    .blob {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle at 30% 30%, #ff8a00, #e52e71);
+      filter: blur(120px);
+      opacity: 0.6;
+      animation: float 12s infinite alternate ease-in-out;
+    }
+
+    .blob.two {
+      background: radial-gradient(circle at 30% 30%, #00c6ff, #0072ff);
+      top: 60%;
+      left: 60%;
+      animation-duration: 16s;
+    }
+
+    @keyframes float {
+      from { transform: translate(-50px, -50px); }
+      to { transform: translate(50px, 50px); }
+    }
+
+    /* ---------- GLASS CARD ---------- */
+    .card {
+      position: relative;
+      width: 360px;
+      padding: 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      animation: fadeIn 1.2s ease forwards;
+      z-index: 2;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      opacity: 0.85;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    /* ---------- BUTTON ---------- */
+    button {
+      background: linear-gradient(135deg, #ff8a00, #e52e71);
+      border: none;
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* ---------- MESSAGE ---------- */
+    .message {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .message.show {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
   <h1 style="color:green;">Microsoft Clarity Test Page</h1>
   <p>If you see this, Clarity will track it.</p>
   test
+  <div class="blob"></div>
+  <div class="blob two"></div>
+
+  <div class="card">
+    <h1>✨ Hello World</h1>
+    <p>
+      This is a beautiful single-file HTML page with modern CSS and smooth JavaScript interactions.
+    </p>
+
+    <button id="magicBtn">Click Me</button>
+
+    <div id="message" class="message">
+      🌟 Magic activated! JavaScript is working.
+    </div>
+  </div>
+
+  <script>
+    const button = document.getElementById("magicBtn");
+    const message = document.getElementById("message");
+
+    button.addEventListener("click", () => {
+      message.classList.add("show");
+
+      // small sparkle effect
+      button.textContent = "✨ Done!";
+      setTimeout(() => {
+        button.textContent = "Click Me";
+      }, 1500);
+    });
+  </script>
 </body>
 </html>
