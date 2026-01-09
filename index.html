@@ -12,8 +12,7 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "ux2kq68gg4");
   </script>
-   <style>
-    /* ---------- RESET ---------- */
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -21,7 +20,6 @@
       font-family: "Poppins", system-ui, sans-serif;
     }
 
-    /* ---------- BACKGROUND ---------- */
     body {
       min-height: 100vh;
       background: linear-gradient(135deg, #667eea, #764ba2);
@@ -30,9 +28,10 @@
       justify-content: center;
       overflow: hidden;
       color: #fff;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    /* ---------- ANIMATED BLOBS ---------- */
     .blob {
       position: absolute;
       width: 400px;
@@ -55,18 +54,17 @@
       to { transform: translate(50px, 50px); }
     }
 
-    /* ---------- GLASS CARD ---------- */
     .card {
       position: relative;
-      width: 360px;
-      padding: 40px;
+      width: 380px;
+      padding: 35px;
       border-radius: 20px;
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(20px);
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
       text-align: center;
-      animation: fadeIn 1.2s ease forwards;
       z-index: 2;
+      animation: fadeIn 1.2s ease forwards;
     }
 
     @keyframes fadeIn {
@@ -74,28 +72,51 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .card h1 {
+    h1 {
       font-size: 2rem;
       margin-bottom: 10px;
     }
 
-    .card p {
+    p {
       opacity: 0.85;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       line-height: 1.6;
     }
 
-    /* ---------- BUTTON ---------- */
+    ul {
+      text-align: left;
+      margin: 20px 0;
+      font-size: 0.9rem;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      margin-bottom: 15px;
+      outline: none;
+    }
+
     button {
       background: linear-gradient(135deg, #ff8a00, #e52e71);
       border: none;
       color: #fff;
-      padding: 14px 32px;
+      padding: 12px 28px;
       border-radius: 50px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
+      margin: 5px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
     }
 
     button:hover {
@@ -103,13 +124,8 @@
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     }
 
-    button:active {
-      transform: scale(0.98);
-    }
-
-    /* ---------- MESSAGE ---------- */
     .message {
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 0.95rem;
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -118,40 +134,87 @@
     .message.show {
       opacity: 1;
     }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    footer {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      z-index: 2;
+    }
   </style>
 </head>
 <body>
-  <h1 style="color:green;">Microsoft Clarity Test Page</h1>
-  <p>If you see this, Clarity will track it.</p>
-  test
+  <h1 style="color:#a8ff60;">Microsoft Clarity Test Page</h1>
+  <p>If you see this, Clarity is tracking interactions.</p>
+
   <div class="blob"></div>
   <div class="blob two"></div>
 
   <div class="card">
     <h1>✨ Hello World</h1>
-    <p>
-      This is a beautiful single-file HTML page with modern CSS and smooth JavaScript interactions.
-    </p>
+    <p>This page now includes more UI elements for Clarity testing.</p>
+
+    <ul>
+      <li>✔ Button click tracking</li>
+      <li>✔ Input field typing</li>
+      <li>✔ Multiple UI components</li>
+      <li>✔ Animated visuals</li>
+    </ul>
+
+    <input id="nameInput" type="text" placeholder="Type something..." />
 
     <button id="magicBtn">Click Me</button>
+    <button id="resetBtn" class="secondary">Reset</button>
 
     <div id="message" class="message">
-      🌟 Magic activated! JavaScript is working.
+      🌟 Interaction detected!
+    </div>
+
+    <div class="stats">
+      <div>Clicks: <span id="clicks">0</span></div>
+      <div>Chars: <span id="chars">0</span></div>
     </div>
   </div>
 
+  <footer>
+    © 2026 · Clarity Interaction Sandbox
+  </footer>
+
   <script>
     const button = document.getElementById("magicBtn");
+    const resetBtn = document.getElementById("resetBtn");
     const message = document.getElementById("message");
+    const clicksEl = document.getElementById("clicks");
+    const charsEl = document.getElementById("chars");
+    const input = document.getElementById("nameInput");
+
+    let clicks = 0;
 
     button.addEventListener("click", () => {
+      clicks++;
+      clicksEl.textContent = clicks;
       message.classList.add("show");
-
-      // small sparkle effect
       button.textContent = "✨ Done!";
-      setTimeout(() => {
-        button.textContent = "Click Me";
-      }, 1500);
+      setTimeout(() => button.textContent = "Click Me", 1200);
+    });
+
+    input.addEventListener("input", () => {
+      charsEl.textContent = input.value.length;
+    });
+
+    resetBtn.addEventListener("click", () => {
+      clicks = 0;
+      clicksEl.textContent = 0;
+      charsEl.textContent = 0;
+      input.value = "";
+      message.classList.remove("show");
     });
   </script>
 </body>
